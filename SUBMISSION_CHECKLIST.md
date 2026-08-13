@@ -1,0 +1,23 @@
+# Final Submission Checklist
+
+- [ ] Confirm individual submission has been approved by the lecturer/supervisor.
+- [ ] Confirm how the pair-only video requirement is adapted for an individual submission.
+- [ ] Run `npm install`.
+- [ ] Run `npm test` and verify all tests pass.
+- [ ] Run the application and complete the charity demo flow.
+- [ ] Run the student demo flow.
+- [ ] Demonstrate duplicate registration prevention.
+- [ ] Review the SQL injection audit manually.
+- [ ] Review every AI-generated code suggestion before committing.
+- [ ] Do not commit `database/volunteerconnect.db`.
+- [ ] Do not commit real passwords, secrets or personal data.
+- [ ] Use a strong production `SESSION_SECRET` if deploying.
+- [ ] Create incremental Git commits showing genuine individual development.
+- [ ] Make the GitHub repository public if required by the Canvas instructions.
+- [ ] Check that README.md renders correctly on GitHub.
+- [ ] Check Mermaid UML rendering on GitHub.
+- [ ] Record the 10-minute video.
+- [ ] Upload the video as unlisted or another approved sharing method.
+- [ ] Test the video link in an incognito/private browser window.
+- [ ] Submit the public GitHub link.
+- [ ] Submit the video link.

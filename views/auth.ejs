@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>VolunteerConnect</title><link rel="stylesheet" href="/css/style.css"></head>
+<body class="auth-page"><main class="auth-card">
+  <div class="brand"><span class="brand-mark">VC</span><div><h1>VolunteerConnect</h1><p>Community volunteering made simple.</p></div></div>
+  <% if (flash) { %><div class="alert <%= flash.type %>"><%= flash.message %></div><% } %>
+  <% if (errors.length) { %><div class="alert error"><ul><% errors.forEach(error => { %><li><%= error.msg %></li><% }) %></ul></div><% } %>
+  <% if (mode === 'login') { %>
+    <h2>Sign in</h2><form method="POST" action="/login" novalidate>
+      <label for="email">Email</label><input id="email" name="email" type="email" required maxlength="160" value="<%= values.email || '' %>" autocomplete="email">
+      <label for="password">Password</label><input id="password" name="password" type="password" required maxlength="128" autocomplete="current-password">
+      <button type="submit">Sign in</button></form>
+    <p class="switch">New here? <a href="/auth?mode=register">Create an account</a></p>
+  <% } else { %>
+    <h2>Create an account</h2><form method="POST" action="/register" novalidate>
+      <label for="name">Full name</label><input id="name" name="name" type="text" required maxlength="80" value="<%= values.name || '' %>" autocomplete="name">
+      <label for="email">Email</label><input id="email" name="email" type="email" required maxlength="160" value="<%= values.email || '' %>" autocomplete="email">
+      <label for="password">Password</label><input id="password" name="password" type="password" required minlength="8" maxlength="128" autocomplete="new-password">
+      <label for="role">Account type</label><select id="role" name="role" required><option value="">Select one</option><option value="student" <%= values.role === 'student' ? 'selected' : '' %>>Student</option><option value="charity" <%= values.role === 'charity' ? 'selected' : '' %>>Charity</option></select>
+      <button type="submit">Create account</button></form>
+    <p class="switch">Already registered? <a href="/">Sign in</a></p>
+  <% } %>
+</main></body></html>

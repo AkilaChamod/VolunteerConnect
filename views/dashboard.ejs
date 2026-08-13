@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Dashboard | VolunteerConnect</title><link rel="stylesheet" href="/css/style.css"></head>
+<body><header class="topbar"><a class="top-brand" href="/dashboard">VolunteerConnect</a><div class="top-actions"><span><%= user.name %> · <%= user.role %></span><form method="POST" action="/logout"><button class="button secondary" type="submit">Log out</button></form></div></header>
+<main class="container">
+  <% if (flash) { %><div class="alert <%= flash.type %>"><%= flash.message %></div><% } %>
+  <% if (errors.length) { %><div class="alert error"><ul><% errors.forEach(error => { %><li><%= error.msg %></li><% }) %></ul></div><% } %>
+  <% if (mode === 'student') { %>
+    <section class="hero"><div><p class="eyebrow">Student dashboard</p><h1>Find a volunteering opportunity</h1><p>Browse upcoming community events and register for a shift that suits you.</p></div></section>
+    <section><div class="section-heading"><h2>Upcoming opportunities</h2><span><%= events.length %> event(s)</span></div>
+      <% if (!events.length) { %><div class="empty">There are no upcoming volunteer events yet.</div><% } %>
+      <div class="cards"><% events.forEach(event => { %><article class="card"><div class="card-top"><span class="pill">Volunteer event</span><span><%= Math.max(event.capacity - event.registered_count, 0) %> places left</span></div><h3><%= event.title %></h3><p class="muted">Hosted by <%= event.charity_name %></p><p><strong>Date:</strong> <%= new Date(event.event_date).toLocaleString() %></p><p><strong>Location:</strong> <%= event.location %></p><a class="button" href="/events/<%= event.id %>">View details</a></article><% }) %></div>
+    </section>
+  <% } else { %>
+    <section class="hero"><div><p class="eyebrow">Charity dashboard</p><h1>Create opportunities for student volunteers</h1><p>Publish a clear event brief, set a capacity, and track registrations.</p></div></section>
+    <section class="two-column"><div><div class="section-heading"><h2>Your events</h2><span><%= events.length %> event(s)</span></div><% if (!events.length) { %><div class="empty">You have not created any events yet.</div><% } %><div class="cards compact"><% events.forEach(event => { %><article class="card"><span class="pill">Your event</span><h3><%= event.title %></h3><p><strong>Date:</strong> <%= new Date(event.event_date).toLocaleString() %></p><p><strong>Registrations:</strong> <%= event.registered_count %> / <%= event.capacity %></p><a class="button" href="/events/<%= event.id %>">Open event</a></article><% }) %></div></div>
+      <aside class="form-panel"><h2>Create an event</h2><form method="POST" action="/events" novalidate>
+        <label for="title">Event title</label><input id="title" name="title" required maxlength="100" value="<%= values.title || '' %>" placeholder="Community garden day">
+        <label for="description">Description</label><textarea id="description" name="description" required maxlength="1000" rows="5" placeholder="Explain what volunteers will do..."><%= values.description || '' %></textarea>
+        <label for="location">Location</label><input id="location" name="location" required maxlength="160" value="<%= values.location || '' %>" placeholder="Campus community garden">
+        <label for="eventDate">Date and time</label><input id="eventDate" name="eventDate" type="datetime-local" required value="<%= values.eventDate || '' %>">
+        <label for="capacity">Volunteer capacity</label><input id="capacity" name="capacity" type="number" min="1" max="500" required value="<%= values.capacity || '' %>">
+        <button type="submit">Publish event</button></form></aside></section>
+  <% } %>
+</main></body></html>
